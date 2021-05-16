@@ -5,7 +5,6 @@ from webdriver_manager.firefox import GeckoDriverManager
 
 BASE_URL = 'https://north.pl'
 
-
 @pytest.fixture(params=['chrome', 'firefox'], scope='class')
 def init_driver(request):
     if request.param == 'chrome':
@@ -23,7 +22,7 @@ def init_driver(request):
     request.cls.driver = driver
     driver.set_window_size(1920, 1080)
     driver.maximize_window()
-    driver.get(BASE_URL)
+    # driver.get(BASE_URL)
 
     yield
     driver.close()

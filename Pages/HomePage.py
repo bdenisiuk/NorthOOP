@@ -1,16 +1,14 @@
 from Pages.BasePage import BasePage
 import pytest
 
-class HomePageLocators():
+class HomePage():
 
-    SEARCH_TEXTBOX_ID = 'SearchText'
-    # SEARCH_TEXTBOX_M = (By.ID, 'SearchText')
+    def __init__(self, driver):
+        self.driver = driver
 
-
-class HomePage(BasePage):
-
-    def open(self):
-
+    def open(self, site):
+        self.driver.get(site)
+        assert "North - Części AGD i RTV - Dom jest w Twoich rękach" in self.driver.title
 
 
 

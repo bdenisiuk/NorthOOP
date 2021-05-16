@@ -13,11 +13,16 @@ from Pages.HomePage import HomePage
 
 
 @pytest.mark.usefixtures("init_driver")
-class TestHappyPaths(unittest.TestCase):
+class BaseTest:
+    pass
 
-    def test_customer_buy_item_from_search_pay_online_with_paczkomaty_no_login(self):
+class TestHappyPaths(BaseTest):
 
-        HomePage.open()
+    @pytest.mark.parametrize("url", ["https://north.pl"])
+    def test_customer_buy_item_from_search_pay_online_with_paczkomaty_no_login(self, url):
+        self.homePage = HomePage(self.driver)
+        self.homePage.open(url)
+
         # homePage.search(item)
         # articlePage.add_to_basket()
         # cartPage.my_cart()
