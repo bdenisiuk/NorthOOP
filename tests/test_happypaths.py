@@ -6,9 +6,8 @@
 # czy wyszukiwarka jest aktywna, czy koszyk pusty)
 
 
-# *happy paths
+# happy paths
 import pytest
-import unittest
 from Pages.HomePage import HomePage
 
 
@@ -16,14 +15,15 @@ from Pages.HomePage import HomePage
 class BaseTest:
     pass
 
+item = 'Lokówka'
+
 class TestHappyPaths(BaseTest):
 
     @pytest.mark.parametrize("url", ["https://north.pl"])
     def test_customer_buy_item_from_search_pay_online_with_paczkomaty_no_login(self, url):
         self.homePage = HomePage(self.driver)
         self.homePage.open(url)
-
-        # homePage.search(item)
+        self.homePage.search(item)
         # articlePage.add_to_basket()
         # cartPage.my_cart()
         # cart.go_to_delivery()
