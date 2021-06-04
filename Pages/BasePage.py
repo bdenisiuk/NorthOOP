@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
 wait_time = 30
+# TODO: seperate PageHeader and PageFooter
 
 
 class BasePage:
@@ -16,6 +17,10 @@ class BasePage:
     def click(self, by_locator):
         WebDriverWait(self.driver, wait_time).until(EC.visibility_of_element_located(by_locator))
         WebDriverWait(self.driver, wait_time).until(EC.element_to_be_clickable(by_locator)).click()
+
+    def element_is_clickable(self, by_locator):
+        WebDriverWait(self.driver, wait_time).until(EC.element_to_be_clickable(by_locator))
+
 
     def enter_text(self, by_locator, text):
         if 'ą' in text:

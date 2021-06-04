@@ -17,9 +17,10 @@ class BaseTest:
 
 item = 'Lokówka'
 
+@pytest.mark.parametrize("url", ["https://north.pl"])
 class TestHappyPaths(BaseTest):
 
-    @pytest.mark.parametrize("url", ["https://north.pl"])
+
     def test_customer_buy_item_from_search_pay_online_with_paczkomaty_no_login(self, url):
         self.homePage = HomePage(self.driver)
         self.homePage.open(url)
@@ -33,6 +34,15 @@ class TestHappyPaths(BaseTest):
         # cart.choose_login()
         # cart.go_to_customer_data
         # cart.fill_customer_data()
+
+    def test_customer_buy_item_from_search_by_enter_pay_online_with_paczkomaty_no_login(self, url):
+        self.homePage = HomePage(self.driver)
+        self.homePage.open(url)
+        self.homePage.search_by_enter(item)
+
+    def test_main_functions_are_working(self, url):
+        self.homePage = HomePage(self.driver)
+        self.homePage.main_functions_are_working()
 
 # otwieramy strone
 # wpisujemy nazwe produktu w szukajke

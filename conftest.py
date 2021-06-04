@@ -3,7 +3,8 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
-@pytest.fixture(params=['chrome', 'firefox'], scope='class')
+# @pytest.fixture(params=['chrome', 'firefox'], scope='class')
+@pytest.fixture(params=['chrome'], scope='class')
 def init_driver(request):
     if request.param == 'chrome':
         chrome_options = webdriver.ChromeOptions()
