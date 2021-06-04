@@ -13,10 +13,12 @@ class BasePage:
 
     def open(self, site):
         self.driver.get(site)
+        return self
 
     def click(self, by_locator):
         WebDriverWait(self.driver, wait_time).until(EC.visibility_of_element_located(by_locator))
         WebDriverWait(self.driver, wait_time).until(EC.element_to_be_clickable(by_locator)).click()
+        return self
 
     def element_is_clickable(self, by_locator):
         WebDriverWait(self.driver, wait_time).until(EC.element_to_be_clickable(by_locator))
