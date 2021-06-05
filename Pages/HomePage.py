@@ -1,4 +1,5 @@
 from Pages.BasePage import BasePage
+from Pages.PageHeader import PageHeader
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -14,33 +15,38 @@ class HomePageLocators:
     search_suggester = (By.ID, "suggester-menu")
 
 
-class HomePage(BasePage):
+class HomePage(BasePage, PageHeader):
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
+        super().__init__(driver)
         self.open('https://north.pl')
 
-    def __enter_search_phrase(self, search_phrase):
-        self.driver.find_element(*HomePageLocators.search_txt).clear()
-        self.enter_text(HomePageLocators.search_txt, search_phrase)
+    # def __enter_search_phrase(self, search_phrase):
+    #     self.driver.find_element(*HomePageLocators.search_txt).clear()
+    #     self.enter_text(HomePageLocators.search_txt, search_phrase)
 
         # search_textbox = self.driver.find_element(*HomePageLocators.search_txt)
         # search_textbox.clear()
         # search_textbox.send_keys(search_phrase)
         # return self
-
-    def __click_search_button(self):
-        self.click(HomePageLocators.search_btn)
-        return self
-
-    def __enter_search_button(self):
-        search_textbox = self.driver.find_element(*HomePageLocators.search_txt)
-        search_textbox.send_keys(Keys.RETURN)
-        return self
+    #
+    # def __click_search_button(self):
+    #     self.click(HomePageLocators.search_btn)
+    #     return self
+    #
+    #
+    # def __enter_search_button(self):
+    #     search_textbox = self.driver.find_element(*HomePageLocators.search_txt)
+    #     search_textbox.send_keys(Keys.RETURN)
+    #     return self
 
     def search(self, search_phrase):
-        self.__enter_search_phrase(search_phrase)
-        self.__click_search_button()
+        # self.__enter_search_phrase(self, search_phrase)
+        # self.__click_search_button(self)
+        PageHeader.search(self, search_phrase)
+        return self
+
 
     def search_by_enter(self, search_phrase):
         self.__enter_search_phrase(search_phrase)

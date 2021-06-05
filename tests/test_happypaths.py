@@ -7,8 +7,11 @@
 
 
 # happy paths
+import time
+
 import pytest
 from Pages.HomePage import HomePage
+from Pages.PageHeader import PageHeader
 
 
 @pytest.mark.usefixtures("init_driver")
@@ -35,11 +38,13 @@ class TestHappyPaths(BaseTest):
         # cart.go_to_customer_data
         # cart.fill_customer_data()
 
+    @pytest.mark.skip
     def test_customer_buy_item_from_search_by_enter_pay_online_with_paczkomaty_no_login(self, url):
         self.homePage = HomePage(self.driver)
         self.homePage.open(url)
         self.homePage.search_by_enter(item)
 
+    @pytest.mark.skip
     def test_main_functions_are_working(self, url):
         self.homePage = HomePage(self.driver)
         self.homePage.main_functions_are_working()
