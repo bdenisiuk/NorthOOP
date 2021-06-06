@@ -2,7 +2,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
-wait_time = 30
+WAIT_TIME = 30
 # TODO: seperate PageHeader and PageFooter
 
 
@@ -16,12 +16,12 @@ class BasePage:
         return self
 
     def click(self, by_locator):
-        WebDriverWait(self.driver, wait_time).until(EC.visibility_of_element_located(by_locator))
-        WebDriverWait(self.driver, wait_time).until(EC.element_to_be_clickable(by_locator)).click()
+        WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator))
+        WebDriverWait(self.driver, WAIT_TIME).until(EC.element_to_be_clickable(by_locator)).click()
         return self
 
     def element_is_clickable(self, by_locator):
-        WebDriverWait(self.driver, wait_time).until(EC.element_to_be_clickable(by_locator))
+        WebDriverWait(self.driver, WAIT_TIME).until(EC.element_to_be_clickable(by_locator))
 
 
     def enter_text(self, by_locator, text):
@@ -31,4 +31,4 @@ class BasePage:
             action.send_keys(text)
             action.perform()
         else:
-            return WebDriverWait(self.driver, wait_time).until(EC.visibility_of_element_located(by_locator)).send_keys(text)
+            return WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator)).send_keys(text)

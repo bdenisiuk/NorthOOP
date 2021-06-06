@@ -14,7 +14,7 @@ class PageHeader():
         super().__init__()
 
     def __click_search_button(self):
-        # self.click(self.search_btn)
+        # self.click(self.SEARCH_BTN)
         BasePage.click(self, self.search_btn)
         time.sleep(4)
         return self
@@ -25,7 +25,7 @@ class PageHeader():
         self.driver.find_element(*self.search_txt).clear()
         BasePage.enter_text(self, self.search_txt, search_phrase)
         time.sleep(4)
-        # self.enter_text(self.search_txt, search_phrase)
+        # self.enter_text(self.SEARCH_TXT, search_phrase)
 
     def search(self, search_phrase):
         self.__enter_search_phrase(search_phrase)
