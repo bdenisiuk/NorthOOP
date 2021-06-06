@@ -20,6 +20,12 @@ class BasePage:
         WebDriverWait(self.driver, WAIT_TIME).until(EC.element_to_be_clickable(by_locator)).click()
         return self
 
+    def wait_for_clickable(self, by_locator):
+        WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator))
+        WebDriverWait(self.driver, WAIT_TIME).until(EC.element_to_be_clickable(by_locator))
+        return self
+
+
     def element_is_clickable(self, by_locator):
         WebDriverWait(self.driver, WAIT_TIME).until(EC.element_to_be_clickable(by_locator))
 

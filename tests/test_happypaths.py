@@ -39,6 +39,12 @@ class TestHappyPaths(BaseTest):
         # cart.fill_customer_data()
 
     @pytest.mark.skip
+    def test_suggester(self, url):
+        self.homePage = HomePage(self.driver)
+        self.homePage.open(url)
+        self.homePage.wait_for_suggester(item)
+
+    @pytest.mark.skip
     def test_customer_buy_item_from_search_by_enter_pay_online_with_paczkomaty_no_login(self, url):
         self.homePage = HomePage(self.driver)
         self.homePage.open(url)

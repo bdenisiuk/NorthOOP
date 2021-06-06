@@ -1,33 +1,37 @@
-import time
-
 from Pages.BasePage import BasePage
 from selenium.webdriver.common.by import By
-
+from selenium.webdriver.common.keys import Keys
 
 class PageHeader():
 
-    search_txt = (By.ID, "SearchText")
-    search_btn = (By.ID, "search-btn")
+    SEARCH_TXT = (By.ID, "SearchText")
+    SEARCH_BTN = (By.ID, "search-btn")
+    SEARCH_IMG = (By.XPATH, "//*[@id='search-btn']/img")
+    SEARCH_SUGGESTER = (By.ID, "suggester-menu")
 
     def __init__(self, driver):
         self.driver = driver
-        super().__init__()
-
-    def __click_search_button(self):
-        # self.click(self.SEARCH_BTN)
-        BasePage.click(self, self.search_btn)
-        time.sleep(4)
-        return self
 
     def __enter_search_phrase(self, search_phrase):
         print('entering search phrase')
+        search_textbox = self.driver.find_element(*PageHeader.SEARCH_TXT)
+        search_textbox.clear()
+        search_textbox.send_keys(search_phrase)
 
-        self.driver.find_element(*self.search_txt).clear()
-        BasePage.enter_text(self, self.search_txt, search_phrase)
-        time.sleep(4)
-        # self.enter_text(self.SEARCH_TXT, search_phrase)
+    def __click_search_button(self):
+        BasePage.click(self, self.SEARCH_BTN)
+
+    def __enter_search_button(self):
+        search_textbox = self.driver.find_element(*PageHeader.SEARCH_TXT)
+        search_textbox.click()
+        search_textbox.send_keys(Keys.RETURN)
 
     def search(self, search_phrase):
         self.__enter_search_phrase(search_phrase)
         self.__click_search_button()
-        return self
+
+    def wait_for_suggester(self, search_phrase):
+        self.__enter_search_phrase(search_phrase)
+        BasePage.wait_for_clickable(self, self.SEARCH_SUGGESTER)
+
+# search by enter
