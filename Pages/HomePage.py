@@ -14,8 +14,8 @@ class HomePage(BasePage):
         self.open('https://north.pl')
 
     def search(self, search_phrase):
-        # self.header.search(search_phrase)
-        self.header.Search.search(self, search_phrase)
+        self.header.search(search_phrase)
+
 
     def wait_for_suggester(self, search_phrase):
         self.header.wait_for_suggester(search_phrase)

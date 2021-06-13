@@ -23,7 +23,6 @@ item = 'Lokówka'
 @pytest.mark.parametrize("url", ["https://north.pl"])
 class TestHappyPaths(BaseTest):
 
-
     def test_customer_buy_item_from_search_pay_online_with_paczkomaty_no_login(self, url):
         self.homePage = HomePage(self.driver)
         self.homePage.open(url)
