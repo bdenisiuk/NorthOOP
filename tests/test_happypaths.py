@@ -11,6 +11,7 @@ import time
 
 import pytest
 from Pages.HomePage import HomePage
+from Pages.ArticlePage import ArticlePage
 from Pages.PageHeader import PageHeader
 
 
@@ -20,14 +21,19 @@ class BaseTest:
 
 item = 'Lokówka'
 
-@pytest.mark.parametrize("url", ["https://north.pl"])
+@pytest.mark.parametrize("url", ["https://north.pl"]) #, "https://test.north.pl"])
 class TestHappyPaths(BaseTest):
 
     def test_customer_buy_item_from_search_pay_online_with_paczkomaty_no_login(self, url):
         self.homePage = HomePage(self.driver)
         self.homePage.open(url)
         self.homePage.search(item)
-        # articlePage.add_to_basket()
+        self.articlePage = ArticlePage(self.driver)
+        #check what side are we on - article, search group, search list
+        #if search group we go to specific iteam
+        #if article we go to add to basket
+        #if search list we choose specific iteam
+        self.articlePage.add_to_basket()
         # cartPage.my_cart()
         # cart.go_to_delivery()
         # cart.choose_delivery()

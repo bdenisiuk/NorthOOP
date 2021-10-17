@@ -2,7 +2,7 @@ from Pages.BasePage import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
-from loguru import logger
+# from loguru import logger
 
 class PageHeader():
 
@@ -27,15 +27,43 @@ class PageHeader():
         search_textbox = self.driver.find_element(*PageHeader.SEARCH_TXT)
         search_textbox.clear()
         search_textbox.send_keys(search_phrase)
+        print('exiting search phrase')
 
     def __click_search_button(self):
         BasePage.click(self, self.SEARCH_BTN)
+        print('click search button done')
 
     # @logger.catch
     def search(self, search_phrase):
         self.__enter_search_phrase(search_phrase)
         self.__click_search_button()
-        time.sleep(5)
+        self.__check_search_result(self.driver.current_url)
+        return self
+
+    def __check_search_result(self, url):
+        print('check search result')
+        print(url)
+        if "/s/" in url:
+            print('/s/ w url')
+            pass
+            # szukajka
+        elif "/karta/" in url:
+            return print('brawo to karta produktu')
+            # karta produktu
+
+        elif ",g" in url:
+            print('g w url')
+            pass
+        # grupa
+
+        # https://north.pl/karta/67010214-koncowka-izolujaca-do-lokowki,736-WG-3530.html
+        # karta produktu
+        # https://north.pl/czesci-agd/czesci-do-lokowek/czesci-do-lokowek-braun,g886891.html
+        # grupa ",g"
+        # https://north.pl/s/?txtSzukaj=NI&search_type=&search_id=&f_producent=&f_rodzaj=&f_klas=0
+        # szukajka z wynikami dla frazy
+        # https://north.pl/s/?txtSzukaj=chujemuje
+        # nie znaleziony
 
     def __enter_search_button(self):
         search_textbox = self.driver.find_element(*PageHeader.SEARCH_TXT)

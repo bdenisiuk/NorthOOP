@@ -38,3 +38,7 @@ class BasePage:
             action.perform()
         else:
             return WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator)).send_keys(text)
+
+
+    def get_value(self, by_locator):
+        return WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator)).get_attribute('value')
