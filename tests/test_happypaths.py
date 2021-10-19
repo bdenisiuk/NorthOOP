@@ -13,6 +13,7 @@ import pytest
 from Pages.HomePage import HomePage
 from Pages.ArticlePage import ArticlePage
 from Pages.PageHeader import PageHeader
+from Pages.BasePage import BasePage
 
 
 @pytest.mark.usefixtures("init_driver")
@@ -20,6 +21,62 @@ class BaseTest:
     pass
 
 item = 'Lokówka'
+
+class TestLogin(BaseTest):
+
+    #polimorfizm powiniene dostosowac sie do wyswietlanej strony
+    #praktycznie powinny sie zmienic tylko zmienne podajace miejsce loginu, hasla i przejscia dalej czy tez wyniki logowania (poprawny, niepoprawny)
+
+    #co trzeba zrobic :
+    #przecwiczyc polimorfizm
+
+    ## polimorfizm - uzycie metody o tej samej nazwie w roznych klasach
+    klasa logowanie
+    metody logowanie poprawne
+    i logowanie niepoprawne
+
+class LoginFromMainPage(BasePage):
+
+    BasePage.click(PageHeader.LOGIN_STATUS)
+    BasePage.click(PageHeader.LOGIN_BUTTON)
+
+
+    pass
+
+class LoginFromBasket():
+
+    pass
+
+    klasa logowanie z poziomu strony glownej
+    wybranie miejsca do wpisania loginu
+    wybranie miejsca do wpisania hasla
+    wybranie przycisku do zatwierdzenia
+    potwierdzenie udanej operacji lub blad nie udanej operacji
+
+    klasa logowanie z poziomu koszyka
+    wybranie miejsca do wpisania loginu
+    wybranie miejsca do wpisania hasla
+    wybranie przycisku do zatwierdzenia
+    potwierdzenie udanej operacji lub blad nie udanej operacji
+
+
+    do klasy przekazujemy strone z ktorej nastepuje logowanie
+
+    #zastosowac polimorfizm na tym logowaniu na dwoch roznych stronach
+    #uzyc tej klasy logowania (moze byc szukania) do testu tej funckjoncalnosci
+
+
+
+    def test_valid_login(self):
+        urls = {"https://north.pl/twoje-konto/logowanie",
+                "https://north.pl/twoje-zakupy/logowanie-do-sklepu"}
+        assert self.driver.current_url in urls
+
+
+
+    def test_invalid_login(self):
+        pass
+
 
 @pytest.mark.parametrize("url", ["https://north.pl"]) #, "https://test.north.pl"])
 class TestHappyPaths(BaseTest):

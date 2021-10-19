@@ -21,6 +21,9 @@ class PageHeader():
     SEARCH_IMG = (By.XPATH, "//*[@id='search-btn']/img")
     SEARCH_SUGGESTER = (By.ID, "suggester-menu")
 
+    LOGIN_STATUS = (By.ID, 'login_status')
+    LOGIN_BUTTON = (By.XPATH, "//*[@id='login_status']//*[contains(@class,'btn')]")
+
 
     def __enter_search_phrase(self, search_phrase):
         print('entering search phrase')
