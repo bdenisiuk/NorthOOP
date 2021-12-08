@@ -1,39 +1,39 @@
-# happy path
-# klient wyszukuje lokowke, wrzuca do koszyka, wybiera platnosc online i wysylke paczkomatem, nie zaklada konta
-
-# testy funkcjonalne
-# strona glowna (sprawdzamy czy sie zaladowala poprawnie, czy sa widoczne glowne elementy,
-# czy wyszukiwarka jest aktywna, czy koszyk pusty)
-
-
-# happy paths
-import time
-
 import pytest
-from Pages.HomePage import HomePage
-from Pages.ArticlePage import ArticlePage
-from Pages.PageHeader import PageHeader
+
+from pages.articlepage import ArticlePage
+from pages.homepage import HomePage
+from resources.data import *
+from pages.cartpage import CartPage
+from pages.grouppage import GroupPage
 
 
 @pytest.mark.usefixtures("init_driver")
 class BaseTest:
     pass
 
-item = 'Lokówka'
 
-@pytest.mark.parametrize("url", ["https://north.pl"]) #, "https://test.north.pl"])
+@pytest.mark.parametrize("url", ["https://north.pl"])
 class TestHappyPaths(BaseTest):
 
+    def test_grupy(self, url):
+        self.homepage = HomePage(self.driver)
+        self.homepage.open(url)
+        self.homepage.header.actions.check_search_result(url)
+        grouppage = GroupPage(self.driver)
+        # grouppage.open('https://north.pl/ramki-wsadu,g675317.html')
+        grouppage.open('https://north.pl/worki-prozniowe,g2056308.html')
+        #grouppage.change_number_of_displayed_items('45')
+        grouppage.displayed_items()
+        #grouppage.check_delivery_time_clickable()
+
+    @pytest.mark.skip
     def test_customer_buy_item_from_search_pay_online_with_paczkomaty_no_login(self, url):
-        self.homePage = HomePage(self.driver)
-        self.homePage.open(url)
-        self.homePage.search(item)
-        self.articlePage = ArticlePage(self.driver)
-        #check what side are we on - article, search group, search list
-        #if search group we go to specific iteam
-        #if article we go to add to basket
-        #if search list we choose specific iteam
-        self.articlePage.add_to_basket()
+        self.homepage = HomePage(self.driver)
+        self.homepage.open(url)
+        self.homepage.search(SEARCHED_ITEM)
+        self.articlepage = ArticlePage(self.driver)
+        self.articlepage.add_to_basket_and_proceed()
+        self.cartpage = CartPage(self.driver)
         # cartPage.my_cart()
         # cart.go_to_delivery()
         # cart.choose_delivery()
@@ -47,17 +47,18 @@ class TestHappyPaths(BaseTest):
     def test_suggester(self, url):
         self.homePage = HomePage(self.driver)
         self.homePage.open(url)
-        self.homePage.wait_for_suggester(item)
+        self.homePage.wait_for_suggester(SEARCHED_ITEM)
 
     @pytest.mark.skip
     def test_customer_buy_item_from_search_by_enter_pay_online_with_paczkomaty_no_login(self, url):
         self.homePage = HomePage(self.driver)
         self.homePage.open(url)
-        self.homePage.search_by_enter(item)
+        self.homePage.search(SEARCHED_ITEM)
 
     @pytest.mark.skip
     def test_main_functions_are_working(self, url):
         self.homePage = HomePage(self.driver)
+        self.homePage.open(url)
         self.homePage.main_functions_are_working()
 
 # otwieramy strone

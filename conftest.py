@@ -8,7 +8,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 def init_driver(request):
     if request.param == 'chrome':
         chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])
         # chrome_options.headless = True
         driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(), options=chrome_options)
 

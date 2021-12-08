@@ -1,0 +1,1 @@
+SEARCHED_ITEM = 'Lokówka 67010018'
