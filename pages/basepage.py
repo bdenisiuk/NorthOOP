@@ -1,6 +1,8 @@
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, ElementNotVisibleException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
 import requests
 
 WAIT_TIME = 30
@@ -34,7 +36,9 @@ class BasePage:
     def wait_for_element_to_disappear(self, by_locator):
         try:
             WebDriverWait(self.driver, WAIT_TIME).until(EC.presence_of_element_located(by_locator))
-        except Exception ('ElementNotVisibleExpection'):
+        except ElementNotVisibleException:
+            print('not visible')
+        except TimeoutException:
             print('not visible')
 
 
@@ -52,8 +56,8 @@ class BasePage:
     def get_value(self, by_locator):
         return WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator)).get_attribute('value')
 
-    def get_text(self, by_locator):
-        return WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator)).text
+    def get_text(self, by_locator, wait=10):
+        return WebDriverWait(self.driver, wait).until(EC.visibility_of_element_located(by_locator)).text
 
     def hover_to(self, by_locator):
         element = WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator))
@@ -62,27 +66,31 @@ class BasePage:
 
     def gather_options_from_dropdown(self, locator):
         #dropdown_list = self.driver.find_elements(locator)
-        dropdown_list = self.driver.find_element_by_id('Limit')
-        options = dropdown_list.find_elements_by_tag_name('option')
+        dropdown_list = self.driver.find_element(By.ID, 'Limit')
+        options = dropdown_list.find_elements(By.TAG_NAME, 'option')
         for opt in options:
             print(opt.text)
+
+    def check_exists_by_xpath(self, xpath):
+        try:
+            self.driver.find_element(By.XPATH,xpath)
+        except NoSuchElementException:
+            return False
+        return True
+
+    def check_contains_other_value_than_nothing(self, xpath):
+        try:
+            self.get_text((By.XPATH, xpath),1)
+        except TimeoutException:
+            return False
+        return True
+
 
     def check_http_status(self, by_locator):
         try:
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36'}
-            http_status = requests.get(by_locator, headers=headers, timeout=wait_time).status_code
+            http_status = requests.get(by_locator, headers=headers, timeout=WAIT_TIME).status_code
             return http_status
         except:
             print("Site doesn't exists")
             return 404
-
-    def check_links(self, url):
-        self.driver.get(url)
-        links = self.driver.find_elements_by_css_selector('a')
-        for link in links:
-            r = requests.head(link.get_attribute('href'))
-            print(link.get_attribute('href'), r.status_code)
-            # if requests.head(link.get_attribute('href')).status_code == 200:
-            #     print("Valid link")
-            # else:
-            #     print("Broken link")

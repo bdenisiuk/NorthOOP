@@ -26,12 +26,14 @@ class GroupPage(BasePage):
     PRICE_GR_POSTFIX = "//div[contains(@class,'product-price')]//span/sup"
     DELIVERY_TIME_POSTFIX = "//*[contains(@class,'product-delivery')]/span"
     CHECK_DELIVERY_TIME_POSTFIX = "//*[contains(@class,'product-delivery')]/a/u"
+    DELIVERY_TIME_NA_POSTFIX = "//*[contains(@class,'product-delivery')]"
     OUTLET_PLN_POSTFIX = "//*[@class='mt-3 text-muted']"
     OUTLET_GR_POSTFIX = "//*[@class='mt-3 text-muted']/sup"
     FORM_POSTFIX = "//div[@class='mt-3']/div/span"
     SUBSTITUTE_POSTFIX = "//div[contains(@class,'ps-3')]/a"
 
     DELIVERY_TIME = (By.XPATH, "//*[@id='prodict-tin-contener']//small[contains(@class,'product-delivery')]/span")
+    UNAVAILABLE = (By.XPATH, )
     CHECK_DELIVERY_TIME = (By.XPATH, "//*[contains(@class,'product-delivery')]/*[@id='check-delivery-time']")
     # CHECK_DELIVERY_TIME1= (By.XPATH, "(//*[contains(@class,'product-delivery')]/*[@id='check-delivery-time'])[1]")
     CHECK_DELIVERY_TIME1= (By.XPATH, "(//*[contains(@class,'product-delivery')]/a/u[text()='Sprawdź czas dostawy'])[1]")
