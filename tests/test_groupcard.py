@@ -277,3 +277,22 @@ class TestGroupPage(BaseTest):
             assert len(items[num][2]) > 1
             assert len(items[num][3]) > 1
             assert len(items[num][4]) > 1
+
+    def test_substitute_item(self):
+        url = "https://north.pl/blachy-do-pieczenia,g1390360.html"
+        self.grouppage = GroupPage(self.driver)
+        self.grouppage.open(url)
+        self.grouppage.click(self.grouppage.COOKIES)
+        zamiennik = (By.XPATH, "//a[contains(text(),'Sprawdź zamiennik')]")
+        substitute = self.driver.find_element(*zamiennik)
+        self.grouppage.wait_for_clickable(zamiennik)
+        self.grouppage.hover_to(zamiennik)
+        time.sleep(2)
+        link = self.grouppage.get_value(zamiennik)
+        self.driver.execute_script("window.scrollTo(0, 900)")
+        # self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        time.sleep(2)
+        self.grouppage.click(zamiennik)
+        print(self.driver.current_url)
+
+
