@@ -56,12 +56,15 @@ class BasePage:
     def get_value(self, by_locator):
         return WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator)).get_attribute('value')
 
+    def get_attribute(self, by_locator, atribute):
+        return WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator)).get_attribute(atribute)
+
     def get_text(self, by_locator, wait=10):
         return WebDriverWait(self.driver, wait).until(EC.visibility_of_element_located(by_locator)).text
 
     def hover_to(self, by_locator):
         element = WebDriverWait(self.driver, WAIT_TIME).until(EC.visibility_of_element_located(by_locator))
-        ActionChains(self.driver).move_to_element(element)
+        ActionChains(self.driver).move_to_element(element).perform()
 
 
     def gather_options_from_dropdown(self, locator):

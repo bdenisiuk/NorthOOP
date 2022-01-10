@@ -288,11 +288,51 @@ class TestGroupPage(BaseTest):
         self.grouppage.wait_for_clickable(zamiennik)
         self.grouppage.hover_to(zamiennik)
         time.sleep(2)
-        link = self.grouppage.get_value(zamiennik)
+        link = self.grouppage.get_attribute(zamiennik, "href")
         self.driver.execute_script("window.scrollTo(0, 900)")
         # self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
         time.sleep(2)
         self.grouppage.click(zamiennik)
         print(self.driver.current_url)
+        assert link == self.driver.current_url
 
+    def test_categories_carousel(self):
+        url = "https://north.pl/czesci-agd/czesci-do-pralek,g1553.html"
+        self.grouppage = GroupPage(self.driver)
+        self.grouppage.open(url)
+        self.grouppage.click(self.grouppage.COOKIES)
+        karuzela_kategorii = (By.ID, 'top-categort-carousel')
+        lista_pozycji_karuzeli = (By.XPATH, "//div[@id='top-categort-carousel-list']/div[contains(@id,'top-categort-carousel')]")
+        lista_pozycji_widocznych = (By.XPATH, "//div[@id='top-categort-carousel-list']/div[contains(@id,'top-categort-carousel')][@aria-hidden='false']")
+        lista_pozycji_widocznych_tekst = (By.XPATH, "//div[@id='top-categort-carousel-list']/div[contains(@id,'top-categort-carousel')][@aria-hidden='false']//a[2]")
+        ostatni_element_widoczny = (By.XPATH, "//div[@id='top-categort-carousel-list']/div[contains(@id,'top-categort-carousel')][@aria-hidden='false']//a[contains(text(),'Wszystkie kategorie')]")
+        self.driver.find_elements(*lista_pozycji_karuzeli)
+        self.driver.find_elements(*lista_pozycji_widocznych)
+        eh = self.driver.find_elements(*lista_pozycji_widocznych_tekst)
+
+        for element in eh:
+            print(element.text)
+
+        karuzela_czesci = (By.ID, 'top-categort-carousel-list')
+        # self.grouppage.hover_to(karuzela_czesci)
+        time.sleep(2)
+        self.grouppage.hover_to(karuzela_kategorii)
+        time.sleep(2)
+        # self.grouppage.hover_to(lista_pozycji_widocznych)
+        time.sleep(2)
+        prev = (By.XPATH, "(//div[@id='top-categort-carousel']//div[@class='splide__arrows d-none d-md-block']//img)[1]")
+        nxt = (By.XPATH, "(//div[@id='top-categort-carousel']//div[@class='splide__arrows d-none d-md-block']//img)[2]")
+
+        for element in eh:
+            print(element.text)
+        time.sleep(2)
+        self.grouppage.click(nxt)
+        for element in eh:
+            print(element.text)
+        time.sleep(2)
+        if self.driver.find_element(*ostatni_element_widoczny) == False:
+            self.grouppage.click(nxt)
+        else:
+            x =self.driver.find_element(*ostatni_element_widoczny)
+            print(x.text)
 
